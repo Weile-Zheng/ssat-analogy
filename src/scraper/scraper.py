@@ -19,12 +19,17 @@ class Scraper:
         self.session = httpx.Client(headers=header)
 
     def scrape(self) -> None:
+        allHTML = []
         for url in self.urls:
+            print(url)
             response = self.session.get(url)
-            html = response.text
-            meta = response.headers
+            allHTML.append(response.text)
+        html = "".join(allHTML)
+        with open("output.txt", "w") as file:
+            file.write(html)
+        assert (False)
+        print("Data written to the file successfully.")
         tree = Selector(html)
-        print(self.questionSelector)
         question = tree.css(self.questionSelector).getall()
         choice = tree.css(self.choiceSelector).getall()
         answer = tree.css(self.answerSelector).getall()
@@ -36,6 +41,8 @@ class Scraper:
             print(j)
             print(k)
 
+        print("Scraping Complete")
+        #print("Total Questions Scraped: " + str(len(full_questions)))
  # def getHTML(self) -> str:
     #     html = []
     #     for url in self.urls:
