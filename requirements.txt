@@ -1,0 +1,10 @@
+Http Client:
+httpx
+
+HTML Parsing:
+beautifulsoup4
+parsel
+
+JSON Parsing:
+jmespath
+
