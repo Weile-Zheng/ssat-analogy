@@ -28,8 +28,12 @@ def main():
         x = typeA(question)
         typeAList.append(x)
 
+    count = 0
     for x in typeAList:
-        print(x.dataList)
+        if x.dataList != None:
+            count += 1
+            print(x.dataList)
+    print("Valid question data: " + str(count))
 
 
 if __name__ == '__main__':

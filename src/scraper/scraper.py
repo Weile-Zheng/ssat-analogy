@@ -44,7 +44,6 @@ class Scraper:
         #     print(k)
 
         print("Scraping Complete")
-        print("Total Questions Scraped: " + str(len(full_questions)))
         self.questions = full_questions
 
  # def getHTML(self) -> str:
