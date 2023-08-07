@@ -1,4 +1,5 @@
 from Scraper import Scraper
+from Question import typeA
 
 
 def main():
@@ -15,11 +16,20 @@ def main():
         urls.append(
             f"https://www.varsitytutors.com/ssat_upper_level_verbal-help/analogies?page={i}")
 
-    question = '.med_question:not(:contains("Complete this analogy"))'
+    question = '.med_question:contains("_")'
     choice = '.possible_answers'
     answer = '.question_correct'
     scraper = Scraper(headers, urls, question, choice, answer)
     scraper.scrape()
+    questionList = scraper.questions
+    typeAList = []
+
+    for question in questionList:
+        x = typeA(question)
+        typeAList.append(x)
+
+    for x in typeAList:
+        print(x.dataList)
 
 
 if __name__ == '__main__':

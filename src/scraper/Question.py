@@ -3,19 +3,20 @@ from bs4 import BeautifulSoup
 
 class typeA:
     '''
-    A Type Question: 
+    A Type Question:
     Structure:
     A is to B as C is to
     ......
 
     Param:
     question, three item tuple containing html for question prompt, answer choices, and answer
-
+    dataList: [Queston] [Question] [Question] [Choices] [
+        Choices] [Choices] [Choices] [Choice] [Answer]
     '''
 
     def __init__(self, question) -> None:
         self.question = question
-        self.list = self.parseQuestion(question)
+        self.dataList = self.parseQuestion(question)
 
     def parseQuestion(self, question) -> list:
         '''
@@ -23,16 +24,24 @@ class typeA:
 
         Param: the question tuple of three items
 
-        Return: a list of 9 strings 
-
-        [Queston] [Question] [Question] [Choices] [Choices] [Choices] [Choices] [Choice] [Answer]
+        Return a list in dataList format
         '''
         string = "".join(question)
         soup = BeautifulSoup(string, 'html.parser')
         p_tag_text = soup.find_all('p')
-        for tag in p_tag_text:
-            print(tag.get_text(strip=True))
-        return 1
+        list = [tag.get_text(strip=True) for tag in p_tag_text]
+        firstString = list.pop(0)
+        firstString = firstString.replace("\xa0", "").replace(" as ", ";").replace(" ", "").replace(
+            "_", "").replace("isto", ";").replace(".", "")
+        keywords = firstString.split(";")
+        filtered = [item for item in keywords if item != ""]
+        if (len(filtered) < 3):
+            return
+        for i in range(3):
+            list.insert(i, filtered[i])
 
-    def printQuestion() -> str:
-        pass
+        return list
+
+
+'Blasphemy is to religion as adultery is to__________.'
+'Blasphemy;religion;adultery;.'

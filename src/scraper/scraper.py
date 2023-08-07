@@ -4,10 +4,13 @@ from parsel import Selector
 
 class Scraper:
     '''
-    Parameters:
+    Variables:
     header: Type Dict - Request Header Configuration
     urls: Type List - List of URLs to scrape
     questionSelector, choiceSelector, answerSelector: Type String - CSS selector
+    questions - List of tuple containing different parts of a full question
+
+
     '''
 
     def __init__(self, header, urls, questionSelector, choiceSelector, answerSelector) -> None:
@@ -19,30 +22,31 @@ class Scraper:
         self.session = httpx.Client(headers=header)
 
     def scrape(self) -> None:
-        allHTML = []
+        '''
+        Scrape and save list as an instance variable
+        Three item tuple with raw html information of question prompt, choices, and, answers
+        '''
+        question = []
+        choice = []
+        answer = []
         for url in self.urls:
-            print(url)
             response = self.session.get(url)
-            allHTML.append(response.text)
-        html = "".join(allHTML)
-        with open("output.txt", "w") as file:
-            file.write(html)
-        assert (False)
-        print("Data written to the file successfully.")
-        tree = Selector(html)
-        question = tree.css(self.questionSelector).getall()
-        choice = tree.css(self.choiceSelector).getall()
-        answer = tree.css(self.answerSelector).getall()
-        print("Scraping Complete")
+            html = response.text
+            tree = Selector(html)
+            question.extend(tree.css(self.questionSelector).getall())
+            choice.extend(tree.css(self.choiceSelector).getall())
+            answer.extend(tree.css(self.answerSelector).getall())
 
-        full_questions = zip(question, choice, answer)
-        for i, j, k in full_questions:
-            print(i)
-            print(j)
-            print(k)
+        full_questions = list(zip(question, choice, answer))
+        # for i, j, k in full_questions:
+        #     print(i)
+        #     print(j)
+        #     print(k)
 
         print("Scraping Complete")
-        #print("Total Questions Scraped: " + str(len(full_questions)))
+        print("Total Questions Scraped: " + str(len(full_questions)))
+        self.questions = full_questions
+
  # def getHTML(self) -> str:
     #     html = []
     #     for url in self.urls:
