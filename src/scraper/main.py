@@ -32,7 +32,7 @@ def main():
     for x in typeAList:
         if x.dataList != None:
             count += 1
-            print(x.dataList)
+            print(str(count) + ": " + str(x.dataList))
     print("Valid question data: " + str(count))
 
 

@@ -43,5 +43,4 @@ class typeA:
         return list
 
 
-'Blasphemy is to religion as adultery is to__________.'
-'Blasphemy;religion;adultery;.'
+
