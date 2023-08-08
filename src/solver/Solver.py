@@ -19,15 +19,28 @@ class ssatTester:
         self.model = KeyedVectors.load_word2vec_format(embedding)
 
     def runTest(self):
+        totalquestion = 0
+        questionCorrect = 0
         for question in self.questionList:
             questionVector = []
-            for word in question:
-                if contains_space(word):
-                    word = "Placeholder"
+            skip = False
+            try:
+                for word in question:
+                    if contains_space(word):
+                        word = "Placeholder"
 
-                word = word.lower()
-                vector = self.model[word]
-                questionVector.append(vector)
+                    word = word.lower()
+                    try:
+                        vector = self.model[word]
+                        questionVector.append(vector)
+                    except KeyError:
+                        skip = True
+                        break
+            except TypeError:
+                continue
+
+            if skip == True:
+                continue
 
             # Word A,B are first analogy, word C are one of the word for the answer analogy.
             wordA = questionVector[0]
@@ -44,9 +57,11 @@ class ssatTester:
             # Find the similarity between differnceVectorChoices to our differenceVector
             choiceScores = []
             for i in differenceVectorChoices:
-                cos_sim = dot(differenceVector, i) / \
-                    (norm(differenceVector)*norm(i))
-                choiceScores.append(cos_sim)
+                # cos_sim = dot(differenceVector, i) / \
+                # (norm(differenceVector)*norm(i))
+                euclidean_similarity = 1 / (1 + norm(differenceVector - i))
+                choiceScores.append(euclidean_similarity)
+
             # Find the highest score, and the its index.
             max = -1
             maxIndex = -1
@@ -64,10 +79,15 @@ class ssatTester:
             print("The highest difference vector similarity score is: " + str(max))
             print("Which coorespond to answer choice: " + ourResultAnswer)
             print(f'The right answer is {question[-1]}')
+            totalquestion += 1
             if (ourResultAnswer == question[-1]):
+                questionCorrect += 1
                 print("Our solver correctly solved the problem")
             else:
                 print("Our solver incorrectly solved the problem")
+        print("Total Question Processed: " + str(totalquestion))
+        print("Question Correct: " + str(questionCorrect))
+        print("Percentage: " + str(questionCorrect/totalquestion))
 
 
 def contains_space(word):

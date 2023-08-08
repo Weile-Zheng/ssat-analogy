@@ -1,6 +1,8 @@
 from solver.Solver import ssatTester
 from scraper.Scraper import Scraper
 from scraper.Question import typeA
+from gensim.scripts.glove2word2vec import glove2word2vec
+from gensim.models import KeyedVectors
 
 
 def main():
@@ -13,9 +15,9 @@ def main():
         "https://www.varsitytutors.com/ssat_upper_level_verbal-help/analogies"
     ]
 
-    # for i in range(2, 11):
-    #     urls.append(
-    #         f"https://www.varsitytutors.com/ssat_upper_level_verbal-help/analogies?page={i}")
+    for i in range(2, 11):
+        urls.append(
+            f"https://www.varsitytutors.com/ssat_upper_level_verbal-help/analogies?page={i}")
 
     # Scraping base on the urls and css selector provided
     question = '.med_question:contains("_")'
@@ -37,9 +39,20 @@ def main():
         if x != None:
             count += 1
             print(str(count) + ": " + str(x))
+        else:
+            typeAList.remove(x)
     print("Valid question data: " + str(count))
 
-    converted_file = '/Users/weilezheng/CompSci/ML/solver_ssat/src/glove.6B.100d.word2vec.txt"'
+    # Path to the original GloVe embeddings file
+    #glove_embedding_file = '/Users/weilezheng/downloads/Glove/glove.6B.300d.txt'
+
+    # Path to the temporary file where the converted word2vec embeddings will be saved
+    #word2vec_embedding_file = 'glove.6B.300d.word2vec.txt'
+
+    # Convert GloVe embeddings to word2vec format
+    #glove2word2vec(glove_embedding_file, word2vec_embedding_file)
+
+    converted_file = 'glove.6B.300d.word2vec.txt'
     solver = ssatTester(typeAList, converted_file)
     solver.runTest()
 
