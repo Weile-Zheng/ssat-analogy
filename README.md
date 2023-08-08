@@ -19,3 +19,4 @@ Data Analysis:
 - Feeding the questions into solver using GloVe vector embedding and Gensim library functions, test
 the accuracy in regard to 1. Training data size, 2. Vector dimension embedded.
 
+[Here](https://github.com/Weile-Zheng/word2vec-vector-embedding) for training your own embedding using word2vec and explaining underlying reasoning for analogies in vector semantic.
