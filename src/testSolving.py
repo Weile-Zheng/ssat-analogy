@@ -52,7 +52,7 @@ def main():
     # Convert GloVe embeddings to word2vec format
     #glove2word2vec(glove_embedding_file, word2vec_embedding_file)
 
-    converted_file = 'glove.6B.300d.word2vec.txt'
+    converted_file = 'glove.6B.200d.word2vec.txt'
     solver = ssatTester(typeAList, converted_file)
     solver.runTest()
 
