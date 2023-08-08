@@ -10,3 +10,9 @@ parsel
 JSON Parsing:
 jmespath
 
+Model&Embedding:
+Gensim
+
+Math:
+Numpy
+Matplotlib
