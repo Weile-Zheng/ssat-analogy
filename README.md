@@ -1,5 +1,5 @@
 # SSAT Analogy Solver
-
+[Background info](https://github.com/Weile-Zheng/word2vec-vector-embedding)
 - Load vector embeddings from GloVe
 - Solver
 - Testing on real questions
