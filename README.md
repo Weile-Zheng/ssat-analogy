@@ -1,4 +1,7 @@
 # SSAT Analogy Solver
+
+I gave a lightning talk presentation on this project. [Here](https://docs.google.com/presentation/d/1lKOyGeWDHpGaPmSONRmMvGvudV7dhag-hb_l81eRU5Q/edit?usp=sharing) is the link to the slides. 
+
 [Background info](https://github.com/Weile-Zheng/word2vec-vector-embedding)
 - Load vector embeddings from GloVe
 - Solver
